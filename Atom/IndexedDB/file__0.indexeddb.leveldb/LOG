@@ -1,6 +1,0 @@
-2018/01/19-01:56:17.753 13770 Reusing MANIFEST /home/gajen/.config/Atom/IndexedDB/file__0.indexeddb.leveldb/MANIFEST-000001
-2018/01/19-01:56:17.753 13770 Recovering log #86
-2018/01/19-01:56:17.762 13770 Reusing old log /home/gajen/.config/Atom/IndexedDB/file__0.indexeddb.leveldb/000086.log 
-2018/01/19-01:57:01.722 14877 Level-0 table #90: started
-2018/01/19-01:57:01.778 14877 Level-0 table #90: 2855510 bytes OK
-2018/01/19-01:57:01.783 14877 Delete type=0 #86

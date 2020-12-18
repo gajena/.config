@@ -115,7 +115,45 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-source /opt/ros/kinetic/setup.bash
-source /opt/ros/kinetic/setup.bash
-source /opt/ros/kinetic/setup.bash
-source ~/catkin_ws/devel/setup.bash
+source /opt/ros/melodic/setup.bash
+
+
+
+
+
+alias gs='git status'
+alias gd='git diff'
+alias gp='git pull'
+alias ga='git add'
+alias de='docker exec -it $(docker ps -q) bash'
+alias dp='docker ps'
+alias nmr='sudo service network-manager restart'
+alias ide='code .'
+
+HISTSIZE=9000
+HISTFILESIZE=$HISTSIZE
+HISTCONTROL=ignorespace:ignoredups
+_bash_history_sync() {
+    builtin history -a
+    HISTFILESIZE=$HISTSIZE
+}
+history() {
+    _bash_history_sync
+    builtin history "$@"
+}
+PROMPT_COMMAND=_bash_history_sync
+
+bind '"\e[A":history-search-backward'
+bind '"\e[B":history-search-forward'
+#export PS1="\[\033[36m\]\u\[\033[m\]@${HOSTNAME}\[\033[32m\] \[\033[33;1m\]\w\[\033[m\] \$(git branch 2>/dev/null | grep '^*' | colrm 1 2) \$ "
+
+_PROMPT_USER="\[\e[0;31m\]\u\[\e[m\]"
+_PROMPT_AT="\[\e[0;33m\]@\[\e[m\]"
+_PROMPT_MACHINE="\[\e[0;32m\]\h:\[\e[m\]"
+_PROMPT_PATH="\[\e[0;35m\]\w\[\e[m\]"
+_CARROT="\[\e[1;35m\]\$\[\e[m\]"
+
+PS1="$_PROMPT_USER$_PROMPT_AT$_PROMPT_MACHINE$_PROMPT_PATH(\$(git branch 2>/dev/null | grep '^*' | colrm 1 2))$_CARROT "
+
+
+fortune | cowsay -f bud-frogs | lolcat

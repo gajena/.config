@@ -1,0 +1,6 @@
+[submodule "picom"]
+	path = picom
+	url = git@github.com:yshui/picom.git
+[submodule "i3-gaps-rounded"]
+	path = i3-gaps-rounded
+	url = https://www.github.com/jbenden/i3-gaps-rounded

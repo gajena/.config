@@ -165,7 +165,7 @@ bar {
     id bottom
     position bottom
     status_command ~/.local/bin/bumblebee-status \
-        -m pasource pasink cpu2 nvidiagpu memory disk:root datetime battery \
+        -m pasource pasink cpu2 nvidiagpu memory disk:root datetime battery-upower \
         -p root.path=$HOME datetime.format="%a, %b %d | %I:%M:%S %p"  \
            cpu2.layout="cpu2.cpuload cpu2.coresload" nvidiagpu.format="GPU: {temp}°C, {mem_used} MiB" \
            memory.format="{used} ({percent:04.02f}%)" disk.format="{used} ({percent:04.02f}%)" \
@@ -178,10 +178,11 @@ bar {
 		urgent_workspace $urgent-bg-color $urgent-bg-color $text-color
 	}
 }
-exec_always feh --bg-scale $HOME/Downloads/img.jpg
+exec_always feh --bg-scale $HOME/Documents/hk.jpg
 bindsym $mod+shift+x exec i3lock-fancy -p -g #-i $HOME/Downloads/a.png
 bindsym Print --release exec "scrot -s /tmp/screenshot-$(date +%F_%T).png -e 'xclip -selection c -t image/png < $f'"
-exec --no-startup-id nm-applet
+exec_always --no-startup-id nm-applet
+exec --no-startup-id i3-battery-popup -L 20 -n
 exec_always guake &
 
 popup_during_fullscreen leave_fullscreen
@@ -194,10 +195,28 @@ bindsym XF86AudioMute exec --no-startup-id "pactl set-sink-mute $(pactl list sho
 bindsym XF86MonBrightnessDown exec --no-startup-id "brightnessctl s 10%-"
 bindsym XF86MonBrightnessUp exec --no-startup-id "brightnessctl s 10%+"
 
-bindsym XF86AudioPlay exec --no-startup-id omnipause toggle &&  sleep 1 && notify-send --icon=gtk-info AudioPlayer "$(omnipause status)"
-bindsym XF86AudioNext exec --no-startup-id omnipause next &&  sleep 3 && notify-send --icon=gtk-info AudioPlayer "$(omnipause status)"
-bindsym XF86AudioPrev exec --no-startup-id omnipause previous &&  sleep 3 && notify-send --icon=gtk-info AudioPlayer "$(omnipause status)"
-bindsym $mod+m exec --no-startup-id notify-send --icon=gtk-info AudioPlayer "$(omnipause status)"
+bindsym XF86AudioPlay exec --no-startup-id omnipause toggle &&  sleep 1 && notify-send --icon=gtk-info --urgency=low  AudioPlayer "$(omnipause status)"
+bindsym XF86AudioNext exec --no-startup-id omnipause next &&  sleep 3 && notify-send --icon=gtk-info --urgency=low AudioPlayer "$(omnipause status)"
+bindsym XF86AudioPrev exec --no-startup-id omnipause previous &&  sleep 3 && notify-send --icon=gtk-info --urgency=low AudioPlayer "$(omnipause status)"
+bindsym $mod+m exec --no-startup-id notify-send --icon=gtk-info --urgency=low AudioPlayer "$(omnipause status)"
 
 gaps inner 5
 smart_borders on
+
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+bindsym $mod+y exec  /home/gn/Downloads/./QGroundControl.AppImage
+bindsym $mod+shift+s exec /home/gn/.config/i3/switch.sh
+exec_always xrandr --output HDMI-0 --auto --scale-from 1920x1080 && xrandr --output HDMI-0 --left-of eDP1 
+
+for_window [window_role="sdl_tut"] floating enable
+for_window [class="Minecraft 1.11.2"] floating enable
+
+
+exec_always picom --config /home/gn/.config/i3/picom.conf --experimental-backends --backend glx --xrender-sync-fence
+
+##snap sucks
+# gphoto2 --stdout --capture-movie | ffmpeg -i - -vcodec rawvideo -pix_fmt yuv420p -threads 0 -f v4l2 /dev/video2
+# sudo modprobe v4l2loopback exclusive_caps=1 card_label="GPhoto2 Webcam"
+# sudo snap connect ffmpeg:camera
+
